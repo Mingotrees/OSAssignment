@@ -83,12 +83,12 @@ export default function App() {
   return <MotionConfig reducedMotion="user"><LazyMotion features={domAnimation} strict><div className={`app-shell${dark ? ' dark-theme' : ''}`}>
     <a className="skip-link" href="#workspace">Skip to simulator</a>
     <header className="topbar"><div className="topbar-inner">
-      <a className="brand" href="#workspace" aria-label="Dispatch simulator"><span className="brand-mark"><Mark /></span>dispatch<span className="brand-divider"/><span className="brand-subtitle">Scheduling lab</span></a>
+      <a className="brand" href="#workspace" aria-label="Dispatch simulator"><span className="brand-mark"><Mark /></span>dispatch</a>
       <div className="header-actions"><span className="course-label">CS 3104N <span>/</span> OPERATING SYSTEMS</span><button className="theme-button" aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} onClick={() => setDark(!dark)}><span aria-hidden="true">{dark ? '◐' : '◑'}</span><span>{dark ? 'Light' : 'Dark'}</span></button></div>
     </div></header>
 
     <main id="workspace" className="workspace">
-      <section className="page-intro"><div><p className="eyebrow"><span/> THE CPU, EXPLAINED</p><h1>Every process.<br className="mobile-break"/> In its own time.</h1><p className="intro-copy">Explore scheduling algorithms, follow the timeline, and see what makes a CPU tick.</p></div><div className="intro-note"><span className="live-dot"/> Interactive workspace<span className="intro-note-sub">Edit a value. Watch the schedule change.</span></div></section>
+      <section className="page-intro"><h1>Every process.<br className="mobile-break"/> In its own time.</h1></section>
 
       <section className="algorithm-section" aria-labelledby="algorithm-title"><div className="section-label"><span>01</span><h2 id="algorithm-title">Choose your algorithm</h2></div>
         <div className="algorithm-grid">{ALGORITHMS.map((a, i) => <button key={a} className={`algorithm-option${a === algo ? ' is-active' : ''}`} aria-pressed={a === algo} onClick={() => { setAlgo(a); setSel(null); }}><span className="algorithm-top"><span className="algorithm-index">0{i + 1}</span><span className="radio-indicator"/></span><strong>{ALGOS[a]}</strong><span className="algorithm-caption">{['Arrival order', 'Priority, uninterrupted', 'Priority, with interruptions', 'A fair turn for everyone'][i]}</span></button>)}</div>
@@ -101,10 +101,10 @@ export default function App() {
           {err(-1, 'table') && <p className="field-error">{err(-1, 'table')}</p>}
           <button className="add-button" onClick={addProcess} disabled={rows.length >= 50}><span aria-hidden="true">+</span> Add process</button>
           <div className="queue-settings">{needP && <label className="checkbox-label"><input type="checkbox" checked={low} onChange={e => setLow(e.target.checked)}/> Lower number = higher priority</label>}{algo === 'rr' && <label className="quantum-label">Time quantum <span><input aria-label="Quantum" inputMode="numeric" aria-invalid={!!err(-1, 'quantum')} value={quantum} onChange={e => setQuantum(e.target.value)}/> units</span></label>}{err(-1, 'quantum') && <p className="field-error">{err(-1, 'quantum')}</p>}<p className="input-hint">Arrival & burst in time units. Whole numbers only.</p><p className="upload-message" role="status">{msg}</p></div>
-          <aside className="algorithm-explainer"><span className="small-label">HOW IT WORKS</span><h3>{NAMES[algo]}</h3><p>{DESC[algo]}</p><span className="auto-update"><span className="live-dot"/> Calculates as you edit</span></aside>
+          <aside className="algorithm-explainer"><h3>{NAMES[algo]}</h3><p>{DESC[algo]}</p></aside>
         </section>
 
-        <div className="results-column"><div className="results-heading"><div className="section-label"><span>03</span><h2>Read the schedule</h2></div><span className={`result-status${res ? '' : ' invalid'}`}><span/>{res ? 'Simulation ready' : 'Check inputs'}</span></div>
+        <div className="results-column"><div className="results-heading"><div className="section-label"><span>03</span><h2>Read the schedule</h2></div>{!res && <span className="result-status invalid"><span/>Check inputs</span>}</div>
           {res && cmp ? <>
             <section className="metrics-grid" aria-label="Simulation metrics">{([
               ['Avg. turnaround', res.avgTAT.toFixed(2), 'units', 'Completion − arrival'], ['Avg. waiting', res.avgWT.toFixed(2), 'units', 'Turnaround − burst'], ['Avg. response', res.avgRT.toFixed(2), 'units', 'First CPU − arrival'],
@@ -120,7 +120,7 @@ export default function App() {
           </> : <section className="panel error-state" role="alert"><span aria-hidden="true">!</span><h2>Let’s check the queue.</h2><p>Fix the highlighted inputs to build your schedule.</p><small>{errs.length} issue{errs.length === 1 ? '' : 's'} to resolve</small></section>}
         </div>
       </div>
-      <footer className="footer"><span><Mark/> dispatch <span>/</span> A little clarity for your CPU.</span><span>CS 3104N · Scheduling lab</span></footer>
+      <footer className="footer"><span><Mark/> dispatch</span><span>CS 3104N</span></footer>
     </main>
   </div></LazyMotion></MotionConfig>;
 }
